@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Currency;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class ParserService
@@ -13,11 +14,13 @@ class ParserService
     {
         $currencies = $this->getCurrencies();
 
-        foreach ($currencies as $currency) {
-            Currency::query()->updateOrInsert([
-                'valuteID' => $currency
-            ], $currency);
-        }
+        DB::transaction(function () use ($currencies) {
+            foreach ($currencies as $currency) {
+                Currency::query()->updateOrInsert([
+                    'valuteID' => $currency
+                ], $currency);
+            }
+        });
     }
 
     protected function getCurrencies(): array
