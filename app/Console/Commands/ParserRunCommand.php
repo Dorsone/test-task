@@ -30,6 +30,7 @@ class ParserRunCommand extends Command
     public function handle(): int
     {
         try {
+            $this->info('Parsing started!');
             (new ParserService())->parse();
             $this->info('Parsing finished successfully!');
             return CommandAlias::SUCCESS;
