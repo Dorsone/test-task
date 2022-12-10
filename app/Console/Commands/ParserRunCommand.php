@@ -31,7 +31,7 @@ class ParserRunCommand extends Command
     {
         try {
             $this->info('Parsing started!');
-            (new ParserService())->parse();
+            app(ParserService::class)->parse();
             $this->info('Parsing finished successfully!');
             return CommandAlias::SUCCESS;
         } catch (\Exception $exception) {

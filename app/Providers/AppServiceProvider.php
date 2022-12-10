@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Adapters\CentralBankAdapter;
+use App\Services\ParserService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,9 +13,11 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
+        $this->app->bind(ParserService::class, function () {
+            return new ParserService((new CentralBankAdapter()));
+        });
     }
 
     /**
@@ -21,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }
