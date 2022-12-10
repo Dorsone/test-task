@@ -2,18 +2,34 @@
 
 namespace App\Adapters;
 
+use App\Custom\Xml;
 use App\Exceptions\ApiRequestFailedException;
 use App\Models\Currency;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
+/**
+ * Adapter for Central Bank's API
+ *
+ * @link http://www.cbr.ru/development/SXML/
+ */
 class CentralBankAdapter
 {
+    /**
+     * Static URLs
+     *
+     * @var string
+     */
     protected static string $currenciesUrl = "http://www.cbr.ru/scripts/XML_valFull.asp";
     protected static string $currencyValuesUrl = "http://www.cbr.ru/scripts/XML_dynamic.asp";
 
     /**
+     * Method that send api request to CB and
+     * gets last 30 days' currency rated
+     *
+     * @param Currency $currency
+     * @return array
      * @throws ApiRequestFailedException
      */
     public function getCurrenciesValues(Currency $currency): array
@@ -30,7 +46,7 @@ class CentralBankAdapter
             $this->failedRequestException($url);
         }
 
-        $array = Arr::get($this->xmlToArray($response->body()), 'Record', []);
+        $array = Arr::get(Xml::toArray($response->body()), 'Record', []);
 
         return array_map(function ($value) {
             return [
@@ -41,6 +57,8 @@ class CentralBankAdapter
     }
 
     /**
+     * Exception for invalid api requests
+     *
      * @throws ApiRequestFailedException
      */
     protected function failedRequestException(string $url)
@@ -49,6 +67,9 @@ class CentralBankAdapter
     }
 
     /**
+     * Method that gets currencies information
+     *
+     * @return array
      * @throws ApiRequestFailedException
      */
     public function getCurrencies(): array
@@ -61,7 +82,7 @@ class CentralBankAdapter
             $this->failedRequestException($url);
         }
 
-        $array = Arr::get($this->xmlToArray($responseDaily->body()), 'Item', []);
+        $array = Arr::get(Xml::toArray($responseDaily->body()), 'Item', []);
 
         return array_map(function ($value) {
             return [
@@ -71,12 +92,5 @@ class CentralBankAdapter
                 'name' => Arr::get($value, 'Name'),
             ];
         }, $array);
-    }
-
-    protected function xmlToArray(string $xml): array
-    {
-        $xmlObject = simplexml_load_string($xml);
-        $json = json_encode($xmlObject);
-        return json_decode($json, true);
     }
 }
