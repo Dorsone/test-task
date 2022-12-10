@@ -11,14 +11,13 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('currencies', function (Blueprint $table) {
+        Schema::create('currency_values', function (Blueprint $table) {
             $table->id();
-            $table->string('valuteID')->unique();
-            $table->integer('numCode');
-            $table->string('charCode', 3);
-            $table->string('name');
+            $table->foreignId('currency_id')->constrained();
+            $table->decimal('value', 16, 4);
+            $table->dateTime('date');
             $table->softDeletes();
         });
     }
@@ -28,8 +27,8 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('currencies');
+        Schema::dropIfExists('currency_values');
     }
 };

@@ -19,12 +19,10 @@ class CurrencyFactory extends Factory
     public function definition(): array
     {
         return [
-            'valueID' => Str::upper(Str::random(1)) . $this->faker->numberBetween(10000, 99999),
+            'valuteID' => Str::upper(Str::random(1)) . $this->faker->numberBetween(10000, 99999),
             'numCode' => $this->faker->randomDigitNotNull(),
             'charCode' => $this->faker->currencyCode(),
             'name' => $this->faker->word(),
-            'value' => $this->faker->randomFloat(4),
-            'date' => $this->faker->dateTime(),
         ];
     }
 }

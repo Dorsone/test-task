@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Currency's Model Class
@@ -13,13 +15,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $numCode
  * @property string $charCode
  * @property string $name
- * @property float $value
- * @property string $date
  * @method static Builder|Currency query()
  */
 class Currency extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -31,8 +31,6 @@ class Currency extends Model
         'numCode',
         'charCode',
         'name',
-        'value',
-        'date',
     ];
 
     /**
@@ -43,12 +41,12 @@ class Currency extends Model
     public $timestamps = false;
 
     /**
-     * The attributes that should be cast.
+     * Relation with CurrencyValue model
      *
-     * @var array
+     * @return HasMany
      */
-    protected $casts = [
-        'date' => 'datetime',
-        'value' => 'float',
-    ];
+    public function currencyValues(): HasMany
+    {
+        return $this->hasMany(CurrencyValue::class, 'currency_id', 'id');
+    }
 }
