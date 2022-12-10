@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $currency_id
  * @property float $value
  * @property string $date
+ * @method Builder|Currency getByDate()
  * @method static Builder|CurrencyValue query()
  */
 class CurrencyValue extends Model
@@ -56,5 +57,19 @@ class CurrencyValue extends Model
     public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::class, 'currency_id', 'id');
+    }
+
+
+    public function scopeGetByDate(Builder $query)
+    {
+        $from = request('from');
+        $to = request('to');
+
+        $query->when($from && $to, function (Builder $query) use ($from, $to) {
+            $query->where([
+                ['date', '>=', $from],
+                ['date', '<=', $to],
+            ]);
+        });
     }
 }
