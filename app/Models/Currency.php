@@ -27,7 +27,7 @@ class Currency extends Model
      * @var string[]
      */
     protected $fillable = [
-        'valueID',
+        'valuteID',
         'numCode',
         'charCode',
         'name',
