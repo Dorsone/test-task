@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->string('valuteID')->unique();
-            $table->string('numCode', 3);
-            $table->string('charCode', 3);
+            $table->string('numCode');
+            $table->string('charCode');
             $table->string('name');
             $table->softDeletes();
         });

@@ -27,7 +27,7 @@ class CurrencyUpdateRequest extends FormRequest
             'valuteID' => 'required|unique:currencies,valuteID,'.$this->currency->id,
             'name' => 'required|string|max:255',
             'numCode' => 'required|numeric|max:999|unique:currencies,numCode,'.$this->currency->id,
-            'charCode' => 'required|string|unique:currencies,charCode,'.$this->currency->id,
+            'charCode' => 'required|string|max:3|unique:currencies,charCode,'.$this->currency->id,
         ];
     }
 }

@@ -27,7 +27,7 @@ class CurrencyStoreRequest extends FormRequest
             'valuteID' => 'required|unique:currencies,valuteID',
             'name' => 'required|string|max:255',
             'numCode' => 'required|numeric|max:999|unique:currencies,numCode',
-            'charCode' => 'required|string|unique:currencies,charCode',
+            'charCode' => 'required|string|max:3|unique:currencies,charCode',
         ];
     }
 }
