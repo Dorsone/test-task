@@ -18,7 +18,7 @@ or run seeder ```php artisan db:seed```
 ### Finally, run a server
 ```php artisan serve```
 
-### For using the interface go to the [DASHBOARD](http://localhost:8000/dashboard)
+### For using the interface go to the [DASHBOARD](http://localhost:8000/register)
 
 ### There is API endpoint to get currency rates:
 - [http://YOUR_URL/api/v1/currencies/CURRENCY_ID/rates?QUERY_PARAMS](http://YOUR_URL/api/v1/currencies/CURRENCY_ID/rates?QUERY_PARAMS)
