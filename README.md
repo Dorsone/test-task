@@ -15,3 +15,13 @@ or run seeder ```php artisan db:seed```
 ```php artisan serve```
 
 ### For using the interface go to the [DASHBOARD](http://localhost:8000/dashboard)
+
+### There is API endpoint to get currency rates:
+- http://YOUR_URL/api/v1/currencies/CURRENCY_ID/rates?QUERY_PARAMS
+
+| QUERY_PARAMS_KEY | QUERY_PARAMS_VALUE | YOUR_URL  |  CURRENCY_ID   |
+|------------------|:------------------:|-----------|:--------------:|
+| from             |     2022-11-29     | 127.0.0.1 | ID of currency |
+| to               |     2022-12-06     |           |                |
+
+
