@@ -11,6 +11,10 @@
 
 or run seeder ```php artisan db:seed```
 
+### After that run ```npm``` commands:
+1) ```npm install```
+2) ```npm run dev```
+
 ### Finally, run a server
 ```php artisan serve```
 
