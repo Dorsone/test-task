@@ -42,7 +42,7 @@ class CentralBankAdapter
 
         $response = Http::get($url);
 
-        if (!($response->status() == ResponseAlias::HTTP_OK)) {
+        if ($response->status() != ResponseAlias::HTTP_OK) {
             $this->failedRequestException($url);
         }
 
